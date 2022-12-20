@@ -12,6 +12,7 @@ const instance = axios.create({
   },
 });
 
+const noTokenUrl: string[] = [];
 // request拦截器
 instance.interceptors.request.use(
   (config) => {
@@ -27,6 +28,13 @@ instance.interceptors.request.use(
     //     config.formData = data;
     //   }
     // }
+    if (!config.headers) {
+      config.headers = {};
+    }
+    const token = uni.getStorageSync('token');
+    if (token && noTokenUrl.indexOf(config.url || '') === -1) {
+      config.headers.loginToken = token;
+    }
     return config;
   },
   (error) => {
@@ -41,6 +49,7 @@ instance.interceptors.response.use(
     // console.log('interceptors.response :>> ', response);
     // 服务端返回的状态码不等于200，则reject()
     if (response.status !== 200) {
+      uni.$emit('z-paging-error-emit');
       return Promise.reject(response);
     }
     if (typeof response.data === 'string') {
@@ -48,12 +57,13 @@ instance.interceptors.response.use(
     }
 
     // TODO: 可以在这里提前处理各自项目接口返回格式
-    // const isInvalidResult = response.data.code !== 200;
-    // if (isInvalidResult) {
-    //   return Promise.reject(errorCodeRes(response));
-    // }
+    const isInvalidResult = response.data.code !== 200;
+    if (isInvalidResult) {
+      uni.$emit('z-paging-error-emit');
+      return Promise.reject(errorCodeRes(response));
+    }
 
-    return response.data;
+    return response.data.content;
   },
 
   // HTTP 状态码 错误处理
@@ -62,6 +72,7 @@ instance.interceptors.response.use(
       console.log('[request] interceptors.response.catch::Request canceled', error);
       Promise.reject(error);
     } else {
+      uni.$emit('z-paging-error-emit');
       Promise.reject(errorCodeHttp(error));
     }
   },
@@ -70,7 +81,7 @@ instance.interceptors.response.use(
 export default instance;
 
 // 兼容 openapi-gen
-export function request<T>(url: string, params: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+export function request<T>(url: string, params: AxiosRequestConfig): Promise<any> {
   return instance.request({
     url,
     ...params,
