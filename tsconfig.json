@@ -12,11 +12,12 @@
     "lib": ["esnext", "dom"],
     "types": ["@dcloudio/types"],
     "allowJs": true,
+    "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
   "include": ["src/**/*.js", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "exclude": ["src/uni_modules"]
+  "exclude": ["src/uni_modules/**/*"]
 }
