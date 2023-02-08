@@ -93,7 +93,7 @@ const formRef = ref<Uniui.FormsRef | null>(null);
 const loading = ref<boolean>(false);
 
 watch(
-  () => store?.state?.login?.token,
+  () => store?.state?.moduleLogin?.token,
   (count, prevCount) => {
     if (count) {
       if (props.url) {
@@ -204,15 +204,5 @@ page {
   100% {
     transform: translate(25px, 10px);
   }
-}
-
-.img-handheld-machine {
-  background: url('~@/static/img-handheld-machine.png') no-repeat;
-  background-size: contain;
-}
-
-.img-ornament {
-  background: url('~@/static/img-ornament.png') no-repeat;
-  background-size: contain;
 }
 </style>

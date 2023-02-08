@@ -12,6 +12,7 @@ module.exports = {
     uni: 'readonly', // uni
     plus: 'readonly', // uni
     weex: 'readonly', // uni
+    Uniui: 'readonly',
   },
   extends: [
     'plugin:vue/vue3-recommended',
@@ -21,13 +22,24 @@ module.exports = {
   ],
   rules: {
     // 未使用声明，方便调试
-    'no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': [1],
+    '@typescript-eslint/no-inferrable-types': ['off'],
+    '@typescript-eslint/no-namespace': ['off'],
 
     '@typescript-eslint/no-empty-function': ['off'],
     '@typescript-eslint/ban-ts-comment': ['off'],
     '@typescript-eslint/no-explicit-any': ['off'],
     '@typescript-eslint/no-this-alias': ['off'],
     '@typescript-eslint/explicit-module-boundary-types': ['off'],
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        types: {
+          Function: false,
+        },
+        extendDefaults: true,
+      },
+    ],
 
     'vue/multi-word-component-names': [
       'error',

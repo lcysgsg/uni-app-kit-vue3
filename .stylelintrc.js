@@ -12,6 +12,7 @@ module.exports = {
   plugins: ['stylelint-declaration-block-no-ignored-properties'],
   rules: {
     'no-descending-specificity': null,
+    'selector-pseudo-element-colon-notation': null,
     //https://github.com/stylelint/stylelint/issues/4114
     // 'function-calc-no-invalid': null,
     'function-url-quotes': 'always',
@@ -25,12 +26,32 @@ module.exports = {
 
     // https://www.npmjs.com/package/stylelint-scss
     // recommended rules
+    'selector-class-pattern': [
+      // 命名规范 -
+      '^([a-zA-Z0-9_-]*)$',
+    ],
+    'value-keyword-case': null,
+    'selector-pseudo-class-no-unknown': [
+      true,
+      {
+        ignorePseudoClasses: ['deep'],
+      },
+    ],
+
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen'],
+        ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen', 'include', 'mixin'],
       },
     ],
+    'function-no-unknown': [
+      true,
+      {
+        ignoreFunctions: 'v-bind',
+      },
+    ],
+
+    'property-no-vendor-prefix': null,
   },
   ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts', 'src/uni_modules/**'],
 };
