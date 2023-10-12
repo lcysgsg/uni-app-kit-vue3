@@ -65,7 +65,7 @@
     "autoprefixer": "^10.4.7",
     "eslint": "^8.20.0",
     "eslint-plugin-vue": "^9.2.0",
-    "openapi-gen": "^0.2.2",
+    "openapi2typescript-yaml": "^0.0.6",
     "postcss": "8.4.4",
     "postcss-html": "^1.5.0",
     "postcss-rem-to-responsive-pixel": "^5.1.3",
